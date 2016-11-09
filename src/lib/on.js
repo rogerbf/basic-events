@@ -1,9 +1,12 @@
 module.exports = subscriptions => ({
   on: (eventName, subscriber) => {
     if (subscriptions.hasOwnProperty(eventName)) {
-      subscriptions[eventName] = subscriptions[eventName].concat([subscriber])
+      subscriptions[eventName] = (
+        subscriptions[eventName]
+          .concat(Object.assign(subscriber, { once: false }))
+      )
     } else {
-      subscriptions[eventName] = [subscriber]
+      subscriptions[eventName] = [Object.assign(subscriber, { once: false })]
     }
     return () => {
       subscriptions[eventName] = subscriptions[eventName]
