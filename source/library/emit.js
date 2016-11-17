@@ -3,7 +3,10 @@ export default subscriptions => ({
     if (subscriptions.hasOwnProperty(eventName)) {
       subscriptions[eventName].map(subscriber => {
         subscriber(data)
-        if (subscriber.once) { subscriber.unsubscribe() }
+        if (subscriber.once) {
+          subscriptions[eventName] = subscriptions[eventName]
+            .filter(s => s !== subscriber)
+        }
       })
     }
   }
