@@ -1,5 +1,6 @@
 node_modules
-dist
+distribution
 .DS_Store
 package
-*.tgz
+basic-events*.tgz
+npm-debug.log

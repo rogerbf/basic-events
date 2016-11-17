@@ -17,3 +17,5 @@ unsubscribe()
 events.emit('data', 'wroom')
 // nothing
 ```
+# basic-events
+

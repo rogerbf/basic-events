@@ -1,4 +1,4 @@
-module.exports = subscriptions => ({
+export default subscriptions => ({
   emit: (eventName, data) => {
     if (subscriptions.hasOwnProperty(eventName)) {
       subscriptions[eventName].map(subscriber => {
