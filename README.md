@@ -1,21 +1,35 @@
 # basic-events
 
-A very basic event emitter with two methods: `.on` and `.emit`.
+A very basic event emitter with three methods: `.on`, `.once` and `.emit`.
 
-## Usage
+## usage
 
 ``` javascript
-const events = require('basic-events')()
+import events from 'basic-events'
 
-const unsubscribe = events.on('data', data => console.log(data))
+const app = {}
+events(app)
+// or
+const app = events()
+```
 
-events.emit('data', 'poof')
-// logs 'poof'
+### `.on()`
 
+```javascript
+const unsubscribe = app.on(`data`, console.log)
+app.emit(`data`, `poof`)
+// `poof`
 unsubscribe()
-
-events.emit('data', 'wroom')
+app.emit(`data`, `wroom`)
 // nothing
 ```
-# basic-events
 
+### `.once()`
+
+```javascript
+const unsubscribe = app.once(`start`, console.log)
+app.emit(`start`, `running`)
+// `running`
+app.emit(`start`, `jumping`)
+// nothing
+```
