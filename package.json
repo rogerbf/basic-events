@@ -11,13 +11,16 @@
     "prebuild": "npm test && rimraf distribution",
     "build": "cross-env BABEL_ENV=production babel --out-dir distribution source",
     "prepublish": "npm run snyk && npm run build",
-    "test": "echo 'no tests'",
+    "test": "tape -r babel-register ./source/**/*.test.js | tap-dot",
     "start": "npm run build && node ./distribution/index.js",
     "watch:start": "onchange \"source/*.js\" \"source/**/*.js\" -- npm run start",
     "eslint": "eslint source",
     "eslint:fix": "eslint --fix source",
     "repl": "npm run build && babel-node",
-    "snyk": "snyk test"
+    "snyk": "snyk test",
+    "watch:test": "onchange \"source/*.js\" \"source/**/*.js\" -- npm run test",
+    "test:coverage": "nyc --reporter=lcov --require babel-register npm test && nyc report",
+    "watch:test:coverage": "onchange \"source/*.js\" \"source/**/*.js\" -- npm run test:coverage"
   },
   "keywords": [
     "event",
@@ -39,9 +42,12 @@
     "eslint-config-standard": "^6.2.1",
     "eslint-plugin-promise": "^3.4.0-0",
     "eslint-plugin-standard": "^2.0.1",
+    "nyc": "^9.0.1",
     "onchange": "^3.0.2",
     "rimraf": "^2.5.4",
-    "snyk": "^1.19.1"
+    "snyk": "^1.19.1",
+    "tap-dot": "^1.0.5",
+    "tape": "^4.6.2"
   },
   "dependencies": {},
   "repository": {
