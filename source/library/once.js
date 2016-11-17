@@ -6,18 +6,7 @@ export default subscriptions => ({
         Object.assign(subscriber, { once: true })
       ]
     } else {
-      subscriptions[eventName] = [
-        Object.assign(
-          subscriber,
-          { once: true },
-          {
-            unsubscribe: () => {
-              subscriptions[eventName] = subscriptions[eventName]
-                .filter(s => s !== subscriber)
-            }
-          }
-        )
-      ]
+      subscriptions[eventName] = [Object.assign(subscriber, { once: true })]
     }
 
     return () => {
