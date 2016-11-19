@@ -7,7 +7,12 @@ test(`is a function`, assert => {
 })
 
 test(`returns array of subscribers`, assert => {
-  const state = { message: [ () => {}, () => {} ] }
+  const state = {
+    message: [
+      () => {},
+      () => {}
+    ]
+  }
   const core = get(state)
   assert.deepEqual(core.get(`message`), state.message)
   assert.end()
