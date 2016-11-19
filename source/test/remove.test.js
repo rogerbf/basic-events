@@ -30,3 +30,15 @@ test(`removes the correct listener`, assert => {
   assert.deepEqual(state, expected)
   assert.end()
 })
+
+test(`remove non existing listener`, assert => {
+  const state = {
+    message: []
+  }
+  const core = remove(state)
+  assert.doesNotThrow(
+    core.remove.bind(null, { eventName: `notification`, listener: () => {} }),
+    null
+  )
+  assert.end()
+})

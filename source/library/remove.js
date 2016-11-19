@@ -5,6 +5,8 @@ export default target => ({
       if (target[eventName].length === 0) {
         delete target[eventName]
       }
+    } else {
+      return null
     }
   }
 })
