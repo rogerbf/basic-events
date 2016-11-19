@@ -1,30 +1,39 @@
 import test from 'tape'
 import once from '../library/once'
 
-const noop = () => {}
-
 test(`once is a function`, assert => {
   assert.equal(typeof (once), `function`)
   assert.end()
 })
 
-test(`adds subscriber to subscriptions object`, assert => {
-  const subscribers = {}
-  const events = once(subscribers)
-  const fn = data => noop()
-  const unsubscribe = events.once(`message`, fn)
-  assert.deepEqual(subscribers, { message: [fn] })
-  unsubscribe()
-  assert.deepEqual(subscribers, { message: [] })
+test(`adds subscriber to subscriptions object and returns unsubscribe function`, assert => {
+  const subscriber = () => {}
+  const subscriptions = {
+    add: ({eventName, listener}) => {
+      assert.equal(eventName, `message`)
+      assert.deepEquals(listener, Object.assign(subscriber, { once: true }))
+    }
+  }
+  const core = once(subscriptions)
+  core.once(`message`, subscriber)
   assert.end()
 })
 
-test(`subscriber to subscriptions object (multiple subscribers)`, assert => {
-  const fnA = () => noop()
-  const subscribers = { primary: [fnA] }
-  const events = once(subscribers)
-  const fnB = data => noop()
-  events.once(`primary`, fnB)
-  assert.deepEqual(subscribers, { primary: [fnA, fnB] })
+test(`unsubscribe`, assert => {
+  const subscriber = () => {}
+  const subscriptions = {
+    add: ({eventName, listener}) => {
+      assert.equal(eventName, `message`)
+      assert.deepEquals(listener, Object.assign(subscriber, { once: true }))
+    },
+    remove: ({eventName, listener}) => {
+      assert.equal(eventName, `message`)
+      assert.deepEqual(listener, Object.assign(subscriber, { once: true }))
+    }
+  }
+  const core = once(subscriptions)
+  const unsubscribe = core.once(`message`, subscriber)
+  assert.equal(typeof (unsubscribe), `function`)
+  unsubscribe()
   assert.end()
 })
