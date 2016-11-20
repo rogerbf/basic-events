@@ -1,9 +1,9 @@
 export default target => ({
-  add: ({ eventName, listener }) => {
+  add: ({ eventName, subscriber }) => {
     if (target.hasOwnProperty(eventName)) {
-      target[eventName] = [ ...target[eventName], listener ]
+      target[eventName] = [ ...target[eventName], subscriber ]
     } else {
-      target[eventName] = [ listener ]
+      target[eventName] = [ subscriber ]
     }
   }
 })

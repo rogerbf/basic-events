@@ -6,38 +6,38 @@ test(`exports a function`, assert => {
   assert.end()
 })
 
-test(`removes listener`, assert => {
+test(`removes subscriber`, assert => {
   const subscriber = () => {}
   const state = {
     message: [ subscriber ]
   }
   const core = remove(state)
-  core.remove({ eventName: `message`, listener: subscriber })
+  core.remove({ eventName: `message`, subscriber })
   const expected = {}
   assert.deepEqual(state, expected)
   assert.end()
 })
 
-test(`removes the correct listener`, assert => {
+test(`removes the correct subscriber`, assert => {
   const subscriberA = () => {}
   const subscriberB = () => {}
   const state = {
     message: [subscriberA, subscriberB]
   }
   const core = remove(state)
-  core.remove({ eventName: `message`, listener: subscriberB })
+  core.remove({ eventName: `message`, subscriber: subscriberB })
   const expected = { message: [ subscriberA ] }
   assert.deepEqual(state, expected)
   assert.end()
 })
 
-test(`remove non existing listener`, assert => {
+test(`remove non existing subscriber`, assert => {
   const state = {
     message: []
   }
   const core = remove(state)
   assert.doesNotThrow(
-    core.remove.bind(null, { eventName: `notification`, listener: () => {} }),
+    core.remove.bind(null, { eventName: `notification`, subscriber: () => {} }),
     null
   )
   assert.end()

@@ -9,9 +9,9 @@ test(`on is a function`, assert => {
 test(`adds subscriber to subscriptions object and returns unsubscribe function`, assert => {
   const subscriber = () => {}
   const subscriptions = {
-    add: ({eventName, listener}) => {
+    add: ({eventName, subscriber}) => {
       assert.equal(eventName, `message`)
-      assert.deepEquals(listener, Object.assign(subscriber, { once: false }))
+      assert.deepEquals(subscriber, Object.assign(subscriber, { once: false }))
     }
   }
   const core = on(subscriptions)
@@ -22,13 +22,13 @@ test(`adds subscriber to subscriptions object and returns unsubscribe function`,
 test(`unsubscribe`, assert => {
   const subscriber = () => {}
   const subscriptions = {
-    add: ({eventName, listener}) => {
+    add: ({eventName, subscriber}) => {
       assert.equal(eventName, `message`)
-      assert.deepEquals(listener, Object.assign(subscriber, { once: false }))
+      assert.deepEquals(subscriber, Object.assign(subscriber, { once: false }))
     },
-    remove: ({eventName, listener}) => {
+    remove: ({eventName, subscriber}) => {
       assert.equal(eventName, `message`)
-      assert.deepEqual(listener, Object.assign(subscriber, { once: false }))
+      assert.deepEqual(subscriber, Object.assign(subscriber, { once: false }))
     }
   }
   const core = on(subscriptions)

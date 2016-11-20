@@ -17,9 +17,9 @@ test(`initState()`, assert => {
 test(`add, get, remove, get`, assert => {
   const subscriptions = initState()
   const subscriber = () => {}
-  subscriptions.add({ eventName: `channel`, listener: subscriber })
+  subscriptions.add({ eventName: `channel`, subscriber: subscriber })
   assert.deepEqual(subscriptions.get(`channel`), [ subscriber ])
-  subscriptions.remove({ eventName: `channel`, listener: subscriber })
+  subscriptions.remove({ eventName: `channel`, subscriber: subscriber })
   assert.deepEqual(subscriptions.get(`channel`), [])
   assert.end()
 })

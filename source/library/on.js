@@ -2,8 +2,8 @@ export default subscriptions => ({
   on: (eventName, subscriber) => {
     subscriptions.add({
       eventName,
-      listener: Object.assign(subscriber, { once: false })
+      subscriber: Object.assign(subscriber, { once: false })
     })
-    return () => subscriptions.remove({ eventName, listener: subscriber })
+    return () => subscriptions.remove({ eventName, subscriber })
   }
 })

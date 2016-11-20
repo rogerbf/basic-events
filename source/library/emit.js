@@ -3,7 +3,7 @@ export default subscriptions => ({
     subscriptions.get(eventName).map(subscriber => {
       subscriber(data)
       if (subscriber.once) {
-        subscriptions.remove({ eventName, listener: subscriber })
+        subscriptions.remove({ eventName, subscriber })
       }
     })
   }

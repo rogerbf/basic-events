@@ -10,7 +10,7 @@ test(`add(prop, fn)`, assert => {
   const state = {}
   const core = add(state)
   const subscriber = () => {}
-  core.add({ eventName: `message`, listener: subscriber })
+  core.add({ eventName: `message`, subscriber })
   const expected = { message: [ subscriber ] }
   assert.deepEqual(state, expected)
   assert.end()
@@ -21,9 +21,9 @@ test(`add(prop, fn)`, assert => {
   const core = add(state)
   const subscribers = [ () => {}, () => {} ]
   const subscriber = () => {}
-  subscribers.map(subscriber => core.add({ eventName: `message`, listener: subscriber }))
-  subscribers.map(subscriber => core.add({ eventName: `notification`, listener: subscriber }))
-  core.add({ eventName: `notification`, listener: subscriber })
+  subscribers.map(subscriber => core.add({ eventName: `message`, subscriber }))
+  subscribers.map(subscriber => core.add({ eventName: `notification`, subscriber }))
+  core.add({ eventName: `notification`, subscriber })
   const expected = { message: [ ...subscribers ], notification: [ ...subscribers, subscriber ] }
   assert.deepEqual(state, expected)
   assert.end()

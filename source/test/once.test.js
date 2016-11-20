@@ -9,9 +9,9 @@ test(`once is a function`, assert => {
 test(`adds subscriber to subscriptions object and returns unsubscribe function`, assert => {
   const subscriber = () => {}
   const subscriptions = {
-    add: ({eventName, listener}) => {
+    add: ({eventName, subscriber}) => {
       assert.equal(eventName, `message`)
-      assert.deepEquals(listener, Object.assign(subscriber, { once: true }))
+      assert.deepEquals(subscriber, Object.assign(subscriber, { once: true }))
     }
   }
   const core = once(subscriptions)
@@ -22,13 +22,13 @@ test(`adds subscriber to subscriptions object and returns unsubscribe function`,
 test(`unsubscribe`, assert => {
   const subscriber = () => {}
   const subscriptions = {
-    add: ({eventName, listener}) => {
+    add: ({eventName, subscriber}) => {
       assert.equal(eventName, `message`)
-      assert.deepEquals(listener, Object.assign(subscriber, { once: true }))
+      assert.deepEquals(subscriber, Object.assign(subscriber, { once: true }))
     },
-    remove: ({eventName, listener}) => {
+    remove: ({eventName, subscriber}) => {
       assert.equal(eventName, `message`)
-      assert.deepEqual(listener, Object.assign(subscriber, { once: true }))
+      assert.deepEqual(subscriber, Object.assign(subscriber, { once: true }))
     }
   }
   const core = once(subscriptions)
